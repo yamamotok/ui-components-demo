@@ -13,6 +13,7 @@ interface Props {
   homeProduct: React.ReactNode;
   proProduct: React.ReactNode;
   productCode: React.ReactNode;
+  betaProduct: React.ReactNode;
 }
 
 const CodeInputLayout: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const CodeInputLayout: React.FC<Props> = ({
   homeProduct,
   proProduct,
   productCode,
+  betaProduct,
 }) => {
   return (
     <div className="flex flex-col gap-16 py-4">
@@ -29,6 +31,7 @@ const CodeInputLayout: React.FC<Props> = ({
       {radioGroup}
       {homeProduct}
       {proProduct}
+      {betaProduct}
       {productCode}
       <div className="pt-8">{children}</div>
     </div>
