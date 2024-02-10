@@ -1,8 +1,9 @@
 'use client';
 import React from 'react';
-import { ProductCodeInput } from '@/components/widgets/ProductCodeInput';
+
 import { Button } from '@/components/elements/Button';
 import { TextInput } from '@/components/elements/TextInput';
+import { ProductCodeInput } from '@/components/widgets/ProductCodeInput';
 import { useInquiry } from '@/hooks/useInquiry';
 
 export const InquiryForm: React.FC = () => {

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+
 import { Signal } from '@/components/elements/Signal';
 
 const SignalSection: React.FC = () => {

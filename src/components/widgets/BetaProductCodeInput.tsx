@@ -1,7 +1,8 @@
 'use client';
 
-import React, { HTMLProps, MutableRefObject, useState } from 'react';
+import React, { HTMLProps, useState } from 'react';
 import clsx from 'clsx';
+
 import { NumberInput } from '../elements/NumberInput';
 
 const CatNumberLength = 3;

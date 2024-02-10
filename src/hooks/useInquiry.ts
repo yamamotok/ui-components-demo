@@ -1,5 +1,5 @@
-import * as z from 'zod';
 import { useRef, useState } from 'react';
+import * as z from 'zod';
 import { ZodError } from 'zod';
 
 const ProductCodeRegex = /^\d{9}$|^\d{3}-\d{7}$/;

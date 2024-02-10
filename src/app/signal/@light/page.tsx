@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+
 import { Light } from '@/components/elements/Light';
 
 const LightSection: React.FC = () => {

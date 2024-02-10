@@ -1,8 +1,9 @@
 'use client';
 
 import React, { HTMLProps, MutableRefObject, useCallback, useEffect, useState } from 'react';
-import { NumberInput } from '../elements/NumberInput';
 import clsx from 'clsx';
+
+import { NumberInput } from '../elements/NumberInput';
 
 const CatNumberLength = 3;
 const ProdNumberLength = 7;
@@ -11,9 +12,6 @@ function validateCatCode(value: string) {
 }
 function validateProdCode(value: string) {
   return new RegExp(`^[0-9]{${ProdNumberLength}}$`).test(value);
-}
-function validateProductCode(value: string) {
-  return new RegExp(`^[0-9]{${CatNumberLength}}-[0-9]{${ProdNumberLength}}$`).test(value);
 }
 function createProductCode(catNumber: string, prodNumber: string) {
   if (!validateCatCode(catNumber) || !validateProdCode(prodNumber)) {

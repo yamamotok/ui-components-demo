@@ -1,8 +1,8 @@
 'use client';
 
 import React, { InputHTMLAttributes } from 'react';
-import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export interface NumberInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> {

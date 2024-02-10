@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { HomeProductCodeInput } from '@/components/widgets/HomeProductCodeInput';
 
 const HomeProductCodeInputSection: React.FC = () => {

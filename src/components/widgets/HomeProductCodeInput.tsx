@@ -1,14 +1,8 @@
 'use client';
 
-import React, {
-  HTMLProps,
-  MutableRefObject,
-  RefObject,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
-import { NumberInput, NumberInputProps } from '@/components/elements/NumberInput';
+import React, { HTMLProps, MutableRefObject, useCallback, useEffect, useState } from 'react';
+
+import { NumberInput } from '@/components/elements/NumberInput';
 
 const ProductCodeLength = 9;
 function validateCode(value: string) {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { HTMLProps, MutableRefObject, useCallback, useEffect, useState } from 'react';
+import React, { HTMLProps, useCallback, useState } from 'react';
 import clsx from 'clsx';
 
 interface Props<T extends string> extends Omit<HTMLProps<HTMLDivElement>, 'onChange'> {

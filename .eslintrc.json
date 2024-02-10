@@ -1,12 +1,80 @@
 {
   "plugins": [
+    "@typescript-eslint",
     "prettier",
+    "import",
+    "react-hooks",
+    "simple-import-sort",
+    "unused-imports",
     "tailwindcss"
   ],
   "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:react/recommended",
-    "plugin:tailwindcss/recommended",
-    "next/core-web-vitals"
+    "next/core-web-vitals",
+    "plugin:tailwindcss/recommended"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "no-console": "warn",
+    "sort-imports": "off",
+    "no-unused-vars": "off",
+    "no-nested-ternary": "error",
+    "consistent-return": "error",
+    "simple-import-sort/exports": "error",
+    "simple-import-sort/imports": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "args": "none"
+      }
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "tailwindcss/classnames-order": "error"
+  },
+  "settings": {
+    "tailwindcss": {
+      "whitelist": ["^x\\-.*"]
+    }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.tsx"],
+      "rules": {
+        "react/prop-types": "off"
+      }
+    },
+    {
+      "files": ["**/*.tsx"],
+      "rules": {
+        "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              // Packages. `react` related packages come first.
+              ["^react", "^next/?", "^@?\\w"],
+              // Side effect imports.
+              ["^\\u0000"],
+              // Path aliases
+              ["^@(?!/?$)"],
+              // Parent imports. Put `..` last.
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+              // Other relative imports. Put same-folder imports and `.` last.
+              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+              // Style imports.
+              ["^.+\\.s?css$"]
+            ]
+          }
+        ]
+      }
+    }
   ]
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Light, LightProps } from '@/components/elements/Light';
 
 type ColorVariant = 'green' | 'red' | 'yellow';

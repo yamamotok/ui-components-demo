@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { SignalLight } from '@/components/elements/SignalLight';
 
 interface Props {

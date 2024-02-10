@@ -1,7 +1,7 @@
 'use client';
 import React, { HTMLProps } from 'react';
-import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export interface Props extends Omit<HTMLProps<HTMLInputElement>, 'type' | 'onChange'> {
   onChange?: (value: string) => void;

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+
 import { AnimatedSignal } from '@/components/elements/AnimatedSignal';
 
 const AnimatedSignalSection: React.FC = () => {
