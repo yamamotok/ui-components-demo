@@ -1,10 +1,10 @@
 import React, { HTMLProps } from 'react';
 
-import { InputState } from '@/components/elements/validated-input/useValidatedInput';
+import { useValidatedInput } from '@/components/elements/validated-input/useValidatedInput';
 
 export interface ValidatedInputProps
   extends Omit<HTMLProps<HTMLDivElement>, 'onChange' | 'value'>,
-    InputState {
+    ReturnType<typeof useValidatedInput> {
   label?: string;
 }
 

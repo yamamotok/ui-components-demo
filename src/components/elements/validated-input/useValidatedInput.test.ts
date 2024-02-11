@@ -1,16 +1,13 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 
-import {
-  InputState,
-  useValidatedInput,
-} from '@/components/elements/validated-input/useValidatedInput';
+import { useValidatedInput } from '@/components/elements/validated-input/useValidatedInput';
 
 describe('useSerialNumberInput', () => {
   const correctValue = '123456789';
   const testMock = jest.fn((str) => str === correctValue);
 
   describe.each([true, false])('"required" option is %s', (required) => {
-    let result: { current: InputState };
+    let result: { current: ReturnType<typeof useValidatedInput> };
     const errorMessage = {
       VALIDATION_ERROR: 'Custom validation error',
       REQUIRED: 'Custom required',
@@ -41,7 +38,7 @@ describe('useSerialNumberInput', () => {
   });
 
   describe('"required" option is true', () => {
-    let result: { current: InputState };
+    let result: { current: ReturnType<typeof useValidatedInput> };
     const errorMessage = {
       VALIDATION_ERROR: 'Custom validation error',
       REQUIRED: 'Custom required',
@@ -64,7 +61,7 @@ describe('useSerialNumberInput', () => {
   });
 
   describe('"required" option is false', () => {
-    let result: { current: InputState };
+    let result: { current: ReturnType<typeof useValidatedInput> };
 
     beforeEach(() => {
       result = renderHook(() => useValidatedInput({ test: testMock, value: '' })).result;

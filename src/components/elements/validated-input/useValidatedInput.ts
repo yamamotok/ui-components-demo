@@ -1,13 +1,13 @@
 import { ReactNode, useCallback, useMemo, useState } from 'react';
 
-export interface InputState {
+interface InputState {
   value: string;
   error: null | 'VALIDATION_ERROR' | 'REQUIRED';
   errorMessage: string | ReactNode;
   onChange: (value: string) => void;
 }
 
-export interface InitParams {
+interface InitParams {
   value?: string;
   required?: boolean;
   test?: (value: string) => boolean;
