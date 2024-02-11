@@ -6,7 +6,7 @@ import { ValidatedInput } from '@/components/elements/validated-input/ValidatedI
 
 const Test = () => {
   const state = useValidatedInput({ value: '', test: (v) => v.length === 3 });
-  return <ValidatedInput {...state} />;
+  return <ValidatedInput label="testing" {...state} />;
 };
 
 describe('ValidatedInput', () => {
@@ -18,7 +18,17 @@ describe('ValidatedInput', () => {
     rendered = render(<Test />);
   });
 
-  it('accepts a correct code', async () => {
+  it('is labeled by the given label', async () => {
+    const { queryByLabelText } = rendered;
+    await waitFor(() => expect(queryByLabelText('testing')).toBeInTheDocument());
+  });
+
+  it('does not initially show an error', async () => {
+    const { queryByRole } = rendered;
+    await waitFor(() => expect(queryByRole('alert')).toBeNull());
+  });
+
+  it('accepts a correct code without showing an error', async () => {
     const { getByRole, queryByRole } = rendered;
     const input = getByRole('textbox') as HTMLInputElement;
     await user.type(input, '123');
@@ -26,7 +36,7 @@ describe('ValidatedInput', () => {
     await waitFor(() => expect(queryByRole('alert')).toBeNull());
   });
 
-  it('accepts an incorrect code but shows error', async () => {
+  it('accepts an incorrect code but shows an error', async () => {
     const { getByRole, queryByRole } = rendered;
     const input = getByRole('textbox') as HTMLInputElement;
     await user.type(input, '1');
