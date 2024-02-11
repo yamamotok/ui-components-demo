@@ -9,15 +9,15 @@ import {
 
 type Props = Omit<ValidatedInputProps, 'label' | 'maxLength'>;
 
-export const CustomerCodeInput: React.FC<Props> = (props) => {
+export const ContractCodeInput: React.FC<Props> = (props) => {
   const { className, ...rest } = props;
 
   return (
     <ValidatedInput
       {...rest}
-      label="Customer Code"
+      label="Contract Code"
       className={twMerge(clsx('', className))}
-      placeholder="000-12345"
+      placeholder="a20110203"
       maxLength={9}
     />
   );
