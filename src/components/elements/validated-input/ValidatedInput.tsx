@@ -1,6 +1,4 @@
 import React, { HTMLProps } from 'react';
-import clsx from 'clsx';
-import { twMerge } from 'tailwind-merge';
 
 import { InputState } from '@/components/elements/validated-input/useValidatedInput';
 
@@ -14,11 +12,11 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = (props) => {
   const { className, maxLength, label, value, errorMessage, onChange, ...rest } = props;
 
   return (
-    <div {...rest} className={twMerge(clsx('', className))}>
-      <label className="flex flex-col gap-2">
+    <div {...rest} className={className}>
+      <label className="flex w-full flex-col gap-2">
         <span>{label}</span>
         <input
-          className="rounded border border-gray-400 px-3 py-2"
+          className="w-full rounded border border-gray-400 px-3 py-2"
           type="text"
           maxLength={maxLength}
           value={value}
