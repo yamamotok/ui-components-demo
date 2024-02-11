@@ -2,7 +2,10 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <ul className="container mx-auto flex flex-col gap-8 py-8">
+    <ul className="container mx-auto flex flex-col gap-8 py-8 text-xl">
+      <li>
+        <Link href="/form">Form</Link>
+      </li>
       <li>
         <Link href="/validated">Generic ValidatedInput</Link>
       </li>
