@@ -2,12 +2,12 @@ import React, { forwardRef, HTMLProps } from 'react';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-interface Props extends Omit<HTMLProps<HTMLDivElement>, 'value' | 'onChange'> {
+interface TextBoxProps extends Omit<HTMLProps<HTMLDivElement>, 'value' | 'onChange'> {
   value: string;
   onChange: (v: string) => void;
 }
 
-export const TextBox = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
+export const TextBox = forwardRef<HTMLTextAreaElement, TextBoxProps>((props, ref) => {
   const { className, onChange, value, label, placeholder, ...rest } = props;
 
   return (
