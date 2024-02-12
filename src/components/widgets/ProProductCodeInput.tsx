@@ -30,6 +30,7 @@ function splitProductCode(value: string) {
 interface Props extends Omit<HTMLProps<HTMLDivElement>, 'value' | 'onChange'> {
   onChange?: (productCode: string) => void;
   defaultValue?: string;
+  // Memo: This looks a little hacky, providing an interface to execute an internal function.
   reset?: MutableRefObject<null | (() => void)>;
 }
 

@@ -6,6 +6,8 @@ import { TextInput } from '@/components/elements/TextInput';
 import { ProductCodeInput } from '@/components/widgets/ProductCodeInput';
 import { useInquiry } from '@/hooks/useInquiry';
 
+// Memo: see [Context and Hook approach](/src/app/form)
+
 export const InquiryForm: React.FC = () => {
   const { update, reset, inquiry, submit } = useInquiry();
 
