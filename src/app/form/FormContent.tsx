@@ -7,7 +7,7 @@ import { ContractCodeInput } from '@/components/widgets/contract-code-input/Cont
 import { CustomerCodeInput } from '@/components/widgets/customer-code-input/CustomerCodeInput';
 
 export const FormContent: React.FC = () => {
-  const { customerCode, contractCode, comment, validInput, reset, submit } = useFormContext();
+  const { customerCode, contractCode, comment, validForm, reset, submit } = useFormContext();
   const [inputStarted, setInputStarted] = useState(false);
 
   const customerCodeRef = useRef<HTMLInputElement>(null);
@@ -29,7 +29,7 @@ export const FormContent: React.FC = () => {
       <div className="mt-4 flex gap-4">
         <Button
           type="submit"
-          disabled={!validInput}
+          disabled={!validForm}
           onClick={(e) => {
             e.preventDefault();
             submit();

@@ -7,7 +7,7 @@ interface FormContextValue {
   customerCode: ReturnType<typeof useCustomerCodeInput>;
   contractCode: ReturnType<typeof useContractCodeInput>;
   comment: { value: string; onChange: (v: string) => void };
-  validInput: boolean;
+  validForm: boolean;
   reset: () => void;
   submit: () => void;
 }
@@ -31,7 +31,7 @@ export const FormContextProvider: React.FC<InitParams & { children: ReactNode }>
   const contractCode = useContractCodeInput({ required: true, value: contractCodeInit });
   const [comment, setComment] = useState(commentInit);
 
-  const validInput = useMemo(() => {
+  const validForm = useMemo(() => {
     return [
       customerCode.value && !customerCode.error,
       contractCode.value && !contractCode.error,
@@ -52,7 +52,7 @@ export const FormContextProvider: React.FC<InitParams & { children: ReactNode }>
     customerCode,
     contractCode,
     comment: { value: comment, onChange: (v: string) => setComment(v) },
-    validInput,
+    validForm,
     reset,
     submit,
   };

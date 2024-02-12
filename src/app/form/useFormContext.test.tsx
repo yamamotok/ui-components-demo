@@ -35,12 +35,12 @@ describe('useFormContext', () => {
     const { result } = renderHook(() => useFormContext(), {
       wrapper: createWrapper(),
     });
-    expect(result.current.validInput).toBe(false);
+    expect(result.current.validForm).toBe(false);
     act(() => {
       result.current.customerCode.onChange('500-11235');
       result.current.contractCode.onChange('c20230614');
     });
-    await waitFor(() => expect(result.current.validInput).toBe(true));
+    await waitFor(() => expect(result.current.validForm).toBe(true));
   });
 
   it('reset all fields with empty values ', () => {
