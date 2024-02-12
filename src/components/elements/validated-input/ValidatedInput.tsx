@@ -1,4 +1,4 @@
-import React, { HTMLProps } from 'react';
+import React, { ForwardedRef, forwardRef, HTMLProps } from 'react';
 
 import { useValidatedInput } from '@/components/elements/validated-input/useValidatedInput';
 
@@ -6,9 +6,10 @@ export interface ValidatedInputProps
   extends Omit<HTMLProps<HTMLDivElement>, 'onChange' | 'value'>,
     ReturnType<typeof useValidatedInput> {
   showError?: boolean;
+  ref?: ForwardedRef<HTMLInputElement>;
 }
 
-export const ValidatedInput: React.FC<ValidatedInputProps> = (props) => {
+export const ValidatedInput = forwardRef<HTMLInputElement, ValidatedInputProps>((props, ref) => {
   const {
     className,
     maxLength,
@@ -26,6 +27,7 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = (props) => {
       <label className="flex w-full flex-col gap-2">
         <span>{label}</span>
         <input
+          ref={ref}
           className="w-full rounded border border-gray-400 px-3 py-2"
           type="text"
           maxLength={maxLength}
@@ -41,4 +43,6 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = (props) => {
       </label>
     </div>
   );
-};
+});
+
+ValidatedInput.displayName = 'ValidatedInput';

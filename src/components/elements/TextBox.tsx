@@ -1,4 +1,4 @@
-import React, { HTMLProps } from 'react';
+import React, { forwardRef, HTMLProps } from 'react';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -7,7 +7,7 @@ interface Props extends Omit<HTMLProps<HTMLDivElement>, 'value' | 'onChange'> {
   onChange: (v: string) => void;
 }
 
-export const TextBox: React.FC<Props> = (props) => {
+export const TextBox = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
   const { className, onChange, value, label, placeholder, ...rest } = props;
 
   return (
@@ -15,6 +15,7 @@ export const TextBox: React.FC<Props> = (props) => {
       <label className="flex w-full flex-col gap-2">
         <span>{label}</span>
         <textarea
+          ref={ref}
           value={value}
           placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
@@ -23,4 +24,6 @@ export const TextBox: React.FC<Props> = (props) => {
       </label>
     </div>
   );
-};
+});
+
+TextBox.displayName = 'TextBox';

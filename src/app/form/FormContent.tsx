@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useFormContext } from '@/app/form/useFormContext';
 import { Button } from '@/components/elements/Button';
@@ -8,12 +8,24 @@ import { CustomerCodeInput } from '@/components/widgets/customer-code-input/Cust
 
 export const FormContent: React.FC = () => {
   const { customerCode, contractCode, comment, validInput, reset, submit } = useFormContext();
+  const [inputStarted, setInputStarted] = useState(false);
+
+  const customerCodeRef = useRef<HTMLInputElement>(null);
+  const contractCodeRef = useRef<HTMLInputElement>(null);
+  const TextBoxRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    customerCodeRef.current?.focus();
+    customerCodeRef.current && (customerCodeRef.current.onblur = () => setInputStarted(true));
+    contractCodeRef.current && (contractCodeRef.current.onblur = () => setInputStarted(true));
+    TextBoxRef.current && (TextBoxRef.current.onblur = () => setInputStarted(true));
+  }, []);
 
   return (
     <form className="flex flex-col gap-8">
-      <CustomerCodeInput {...customerCode} />
-      <ContractCodeInput {...contractCode} />
-      <TextBox placeholder="Comment" label="Comment" {...comment} />
+      <CustomerCodeInput {...customerCode} ref={customerCodeRef} showError={inputStarted} />
+      <ContractCodeInput {...contractCode} ref={contractCodeRef} showError={inputStarted} />
+      <TextBox placeholder="Comment" label="Comment" {...comment} ref={TextBoxRef} />
       <div className="mt-4 flex gap-4">
         <Button
           type="submit"
@@ -30,6 +42,8 @@ export const FormContent: React.FC = () => {
           variant="secondary"
           onClick={(e) => {
             e.preventDefault();
+            setInputStarted(false);
+            customerCodeRef.current?.focus();
             reset();
           }}
         >
