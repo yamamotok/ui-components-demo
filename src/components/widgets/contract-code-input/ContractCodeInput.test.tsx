@@ -7,7 +7,7 @@ import { ContractCodeInput } from './ContractCodeInput';
 
 const Test = () => {
   const state = useContractCodeInput({ value: '' });
-  return <ContractCodeInput {...state} />;
+  return <ContractCodeInput showError={true} {...state} />;
 };
 
 describe('ContractCodeInput', () => {

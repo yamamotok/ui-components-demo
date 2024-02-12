@@ -5,7 +5,7 @@ import { FormContextProvider } from '@/app/form/useFormContext';
 
 export const Form: React.FC = () => {
   return (
-    <FormContextProvider customerCode="500-11235" contractCode="c20230614">
+    <FormContextProvider customerCode="500-11235" contractCode="">
       <FormContent />
     </FormContextProvider>
   );

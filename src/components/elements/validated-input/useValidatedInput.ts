@@ -1,20 +1,22 @@
-import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 
-interface InputState {
-  value: string;
-  error: null | 'VALIDATION_ERROR' | 'REQUIRED';
-  errorMessage: string | ReactNode;
-  onChange: (value: string) => void;
+const ErrorTypes = ['VALIDATION_ERROR', 'REQUIRED'] as const;
+
+interface ValidatedInputState {
+  readonly value: string;
+  readonly error: null | (typeof ErrorTypes)[number];
+  readonly errorMessage: string | ReactNode;
+  readonly onChange: (value: string) => void;
 }
 
-interface InitParams {
+interface ValidatedInputInitParams {
   value?: string;
   required?: boolean;
   test?: (value: string) => boolean;
-  errorMessage?: { VALIDATION_ERROR?: string | ReactNode; REQUIRED?: string | ReactNode };
+  errorMessage?: { [key in (typeof ErrorTypes)[number]]?: ReactNode };
 }
 
-export function useValidatedInput(initParams?: InitParams): InputState {
+export function useValidatedInput(initParams?: ValidatedInputInitParams): ValidatedInputState {
   const {
     value: initValue = '',
     test = () => true,
@@ -22,8 +24,17 @@ export function useValidatedInput(initParams?: InitParams): InputState {
     errorMessage: errorMessageMap = {},
   } = initParams ?? {};
   const [value, setValue] = useState(initValue);
-  const [error, setError] = useState<InputState['error']>(null);
-  const [changedOnce, setChangedOnce] = useState(false);
+  const [error, setError] = useState<ValidatedInputState['error']>(null);
+
+  useEffect(() => {
+    if (required && !value) {
+      setError('REQUIRED');
+    } else if (value && !test(value)) {
+      setError('VALIDATION_ERROR');
+    } else {
+      setError(null);
+    }
+  }, [required, test, value]);
 
   const errorMessage = useMemo(() => {
     if (!error) {
@@ -32,20 +43,10 @@ export function useValidatedInput(initParams?: InitParams): InputState {
     return errorMessageMap[error] ?? error;
   }, [error, errorMessageMap]);
 
-  const handleChange = useCallback(
-    (str: string) => {
-      if (changedOnce && !str && required) {
-        setError('REQUIRED');
-      } else if (str && !test(str)) {
-        setError('VALIDATION_ERROR');
-      } else {
-        setError(null);
-      }
-      setValue(str);
-      setChangedOnce(true);
-    },
-    [changedOnce, required, test]
-  );
-
-  return { value, error, errorMessage, onChange: handleChange };
+  return {
+    value,
+    error,
+    errorMessage,
+    onChange: (v: string) => setValue(v),
+  };
 }

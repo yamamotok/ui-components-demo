@@ -5,13 +5,21 @@ import { useValidatedInput } from '@/components/elements/validated-input/useVali
 export interface ValidatedInputProps
   extends Omit<HTMLProps<HTMLDivElement>, 'onChange' | 'value'>,
     ReturnType<typeof useValidatedInput> {
-  label?: string;
-  placeholder?: string;
+  showError?: boolean;
 }
 
 export const ValidatedInput: React.FC<ValidatedInputProps> = (props) => {
-  const { className, maxLength, label, placeholder, value, errorMessage, onChange, ...rest } =
-    props;
+  const {
+    className,
+    maxLength,
+    label,
+    placeholder,
+    value,
+    errorMessage,
+    onChange,
+    showError = true,
+    ...rest
+  } = props;
 
   return (
     <div {...rest} className={className}>
@@ -25,7 +33,7 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = (props) => {
           placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
         />
-        {errorMessage && (
+        {showError && errorMessage && (
           <span role="alert" className="-mt-1 text-sm text-red-500">
             {errorMessage}
           </span>

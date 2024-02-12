@@ -6,7 +6,7 @@ import { useCustomerCodeInput } from '@/components/widgets/customer-code-input/u
 
 const Test = () => {
   const state = useCustomerCodeInput({ value: '' });
-  return <CustomerCodeInput {...state} />;
+  return <CustomerCodeInput showError={true} {...state} />;
 };
 
 describe('CustomerCodeInput', () => {

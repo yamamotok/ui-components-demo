@@ -2,73 +2,149 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 
 import { useValidatedInput } from '@/components/elements/validated-input/useValidatedInput';
 
-describe('useSerialNumberInput', () => {
+describe('useValidatedInput', () => {
   const correctValue = '123456789';
+  const errorMessage = {
+    VALIDATION_ERROR: 'Custom validation error',
+    REQUIRED: 'Custom required',
+  };
   const testMock = jest.fn((str) => str === correctValue);
 
-  describe.each([true, false])('"required" option is %s', (required) => {
-    let result: { current: ReturnType<typeof useValidatedInput> };
-    const errorMessage = {
-      VALIDATION_ERROR: 'Custom validation error',
-      REQUIRED: 'Custom required',
-    };
-
-    beforeEach(() => {
-      result = renderHook(() =>
-        useValidatedInput({ test: testMock, value: '', required, errorMessage })
+  describe.each([true, false, undefined])('when "required" is %s', (required) => {
+    it('shows VALIDATION_ERROR if an incorrect value is initially given', () => {
+      const result = renderHook(() =>
+        useValidatedInput({
+          test: testMock,
+          value: correctValue + '0',
+          required,
+          errorMessage: errorMessage,
+        })
       ).result;
-    });
-
-    it('should not return REQUIRED error even if the value is empty, unless something has not yet been entered', () => {
-      expect(result.current.error).toBe(null);
-    });
-
-    it('should validate the value and return VALIDATION_ERROR if necessary', async () => {
-      const incorrectValue = `${correctValue}0`;
-      act(() => result.current.onChange(incorrectValue));
-      await waitFor(() => result.current.value === incorrectValue);
       expect(result.current.error).toBe('VALIDATION_ERROR');
       expect(result.current.errorMessage).toBe(errorMessage.VALIDATION_ERROR);
+    });
 
+    it('does not show VALIDATION_ERROR after the value is corrected', async () => {
+      const result = renderHook(() =>
+        useValidatedInput({
+          test: testMock,
+          value: correctValue + '0',
+          required,
+          errorMessage: errorMessage,
+        })
+      ).result;
       act(() => result.current.onChange(correctValue));
-      await waitFor(() => result.current.value === correctValue);
+      await waitFor(() => {
+        expect(result.current.error).toBeNull();
+        expect(result.current.errorMessage).toBe('');
+      });
+    });
+
+    it('does not show VALIDATION_ERROR if a correct value is initially given', () => {
+      const result = renderHook(() =>
+        useValidatedInput({
+          test: testMock,
+          value: correctValue,
+          required,
+          errorMessage: errorMessage,
+        })
+      ).result;
       expect(result.current.error).toBeNull();
       expect(result.current.errorMessage).toBe('');
     });
+
+    it('shows VALIDATION_ERROR after the value is wrongly modified', async () => {
+      const result = renderHook(() =>
+        useValidatedInput({
+          test: testMock,
+          value: correctValue,
+          required,
+          errorMessage: errorMessage,
+        })
+      ).result;
+      act(() => result.current.onChange(correctValue + '0'));
+      await waitFor(() => {
+        expect(result.current.error).toBe('VALIDATION_ERROR');
+        expect(result.current.errorMessage).toBe(errorMessage.VALIDATION_ERROR);
+      });
+    });
   });
 
-  describe('"required" option is true', () => {
-    let result: { current: ReturnType<typeof useValidatedInput> };
-    const errorMessage = {
-      VALIDATION_ERROR: 'Custom validation error',
-      REQUIRED: 'Custom required',
-    };
-
-    beforeEach(() => {
-      result = renderHook(() =>
-        useValidatedInput({ test: testMock, value: '', required: true, errorMessage })
+  describe.each([true])('when "required" is %s', (required) => {
+    it('shows REQUIRED error if an empty value is initially given', () => {
+      const result = renderHook(() =>
+        useValidatedInput({
+          test: testMock,
+          value: '',
+          required,
+          errorMessage: errorMessage,
+        })
       ).result;
-    });
-
-    it('should return REQUIRED error after something is entered and it becomes empty again', async () => {
-      act(() => result.current.onChange('123'));
-      await waitFor(() => result.current.value === '123');
-      act(() => result.current.onChange(''));
-      await waitFor(() => result.current.value === '');
       expect(result.current.error).toBe('REQUIRED');
       expect(result.current.errorMessage).toBe(errorMessage.REQUIRED);
     });
-  });
 
-  describe('"required" option is false', () => {
-    let result: { current: ReturnType<typeof useValidatedInput> };
-
-    beforeEach(() => {
-      result = renderHook(() => useValidatedInput({ test: testMock, value: '' })).result;
+    it('does not show REQUIRED error after any value is input', async () => {
+      const result = renderHook(() =>
+        useValidatedInput({
+          test: testMock,
+          value: '',
+          required,
+          errorMessage: errorMessage,
+        })
+      ).result;
+      act(() => result.current.onChange('123'));
+      await waitFor(() => {
+        expect(result.current.error).not.toBe('REQUIRED');
+        expect(result.current.errorMessage).not.toBe(errorMessage.REQUIRED);
+      });
     });
 
-    it('should not return REQUIRED error even if the value is empty, unless something has not yet been entered', () => {
-      expect(result.current.error).toBe(null);
+    it('shows REQUIRED error after the value becomes empty', async () => {
+      const result = renderHook(() =>
+        useValidatedInput({
+          test: testMock,
+          value: correctValue,
+          required,
+          errorMessage: errorMessage,
+        })
+      ).result;
+      act(() => result.current.onChange(''));
+      await waitFor(() => {
+        expect(result.current.error).toBe('REQUIRED');
+        expect(result.current.errorMessage).toBe(errorMessage.REQUIRED);
+      });
+    });
+  });
+
+  describe.each([false, undefined])('when "required" is %s', (required) => {
+    it('does not shows REQUIRED error even if an empty value is initially given', () => {
+      const result = renderHook(() =>
+        useValidatedInput({
+          test: testMock,
+          value: '',
+          required,
+          errorMessage: errorMessage,
+        })
+      ).result;
+      expect(result.current.error).not.toBe('REQUIRED');
+      expect(result.current.errorMessage).not.toBe(errorMessage.REQUIRED);
+    });
+
+    it('does not shows REQUIRED error after the value becomes empty', async () => {
+      const result = renderHook(() =>
+        useValidatedInput({
+          test: testMock,
+          value: correctValue,
+          required,
+          errorMessage: errorMessage,
+        })
+      ).result;
+      act(() => result.current.onChange(''));
+      await waitFor(() => {
+        expect(result.current.error).not.toBe('REQUIRED');
+        expect(result.current.errorMessage).not.toBe(errorMessage.REQUIRED);
+      });
     });
   });
 });
