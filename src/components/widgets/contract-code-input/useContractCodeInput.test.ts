@@ -8,14 +8,14 @@ import {
 
 describe('testContractCode', () => {
   it.each(['a12345678', 'z01236789'])(
-    'should return true if the contract code is in the format "a00000000" (%s)',
+    'returns true if the contract code is in the format "a00000000" (%s)',
     (str) => {
       expect(testContractCode(str)).toBe(true);
     }
   );
 
   it.each(['A12345678', 'Z01236789', 'xA12345678', 'A12345678x', 'A123456780'])(
-    'should return false if the contract code is malformed (%s)',
+    'returns false if the contract code is malformed (%s)',
     (str) => {
       expect(testContractCode(str)).toBe(false);
     }
@@ -29,7 +29,7 @@ describe('useContractCode', () => {
     result = renderHook(() => useContractCodeInput()).result;
   });
 
-  it('should return an error if the contract code is not in the format "a00000000"', async () => {
+  it('returns an error if the contract code is not in the format "a00000000"', async () => {
     const incorrectValue = '012345678';
     act(() => result.current.onChange(incorrectValue));
     await waitFor(() => {
@@ -37,7 +37,7 @@ describe('useContractCode', () => {
     });
   });
 
-  it('should be successful if the contract code is correct.', async () => {
+  it('is successful if the contract code is correct.', async () => {
     const incorrectValue = '012345678';
     act(() => result.current.onChange(incorrectValue));
     await waitFor(() => {

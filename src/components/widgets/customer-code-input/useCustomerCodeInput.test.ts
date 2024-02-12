@@ -8,14 +8,14 @@ import {
 
 describe('testCustomerCode', () => {
   it.each(['123-45678', '000-00000'])(
-    'should return true if the customer code is in the format "000-00000" (%s)',
+    'returns true if the customer code is in the format "000-00000" (%s)',
     (str) => {
       expect(testCustomerCode(str)).toBe(true);
     }
   );
 
   it.each(['123-456789', '0123-45678', 'x23-45678', '123-4567x'])(
-    'should return false if the customer code is malformed (%s)',
+    'returns false if the customer code is malformed (%s)',
     (str) => {
       expect(testCustomerCode(str)).toBe(false);
     }
@@ -29,7 +29,7 @@ describe('useCustomerCodeInput', () => {
     result = renderHook(() => useCustomerCodeInput()).result;
   });
 
-  it('should return an error if the customer code is not in the format "000-00000"', async () => {
+  it('returns an error if the customer code is not in the format "000-00000"', async () => {
     const incorrectValue = '123456789';
     act(() => result.current.onChange(incorrectValue));
     await waitFor(() => {
@@ -37,7 +37,7 @@ describe('useCustomerCodeInput', () => {
     });
   });
 
-  it('should be successful if the customer code is correct.', async () => {
+  it('is successful if the customer code is correct.', async () => {
     const incorrectValue = '123456789';
     act(() => result.current.onChange(incorrectValue));
     await waitFor(() => {
